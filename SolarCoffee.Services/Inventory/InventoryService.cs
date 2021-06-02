@@ -21,14 +21,11 @@ namespace SolarCoffee.Services.Inventory
             _logger = logger;
         }
 
-        public void CreateSnapshot()
-        {
-            throw new NotImplementedException();
-        }
-
         public ProductInventory GetByProductId(int productId)
         {
-            throw new NotImplementedException();
+            return _db.ProductInventories
+                .Include(pi => pi.Product)
+                .FirstOrDefault(pi => pi.Product.Id == productId);
         }
 
         public List<ProductInventory> GetCurrentInventory()
@@ -41,7 +38,11 @@ namespace SolarCoffee.Services.Inventory
 
         public List<ProductInventorySnapshot> GetSnapshotHistory()
         {
-            throw new NotImplementedException();
+            var earliest = DateTime.UtcNow - TimeSpan.FromHours(6);
+            return _db.ProductInventorySnapshots
+                .Include(snap => snap.Product)
+                .Where(snap => snap.SnapshitTime > earliest && !snap.Product.IsArchived)
+                .ToList();
         }
 
         public ServiceResponse<ProductInventory> UpdateUnitsAvailable(int id, int adjustment)
@@ -55,7 +56,7 @@ namespace SolarCoffee.Services.Inventory
 
                 try
                 {
-                    CreateSnapshot();
+                    CreateSnapshot(inventory);
                 }
                 catch (Exception e)
                 {
@@ -82,6 +83,16 @@ namespace SolarCoffee.Services.Inventory
                     Time = DateTime.UtcNow
                 };
             }
+        }
+        private void CreateSnapshot(ProductInventory inventory)
+        {
+            var snapshot = new ProductInventorySnapshot
+            {
+                SnapshitTime = DateTime.UtcNow,
+                Product = inventory.Product,
+                QuantityOnHand = inventory.QuantityOnHand
+            };
+            _db.Add(snapshot);
         }
     }
 }
