@@ -11,18 +11,6 @@ namespace SolarCoffee.Web.Serialization
     {
         public static CustomerModel SerializeCustomer(Customer customer)
         {
-            var address = new CustomerAddressModel
-            {
-                Id = customer.Id,
-                AddressLine1 = customer.PrimaryAddress.AddressLine1,
-                AddressLine2 = customer.PrimaryAddress.AddressLine2,
-                City = customer.PrimaryAddress.City,
-                State = customer.PrimaryAddress.State,
-                Country = customer.PrimaryAddress.Country,
-                PostalCode = customer.PrimaryAddress.PostalCode,
-                CreatedOn = customer.PrimaryAddress.CreatedOn,
-                UpdatedOn = customer.PrimaryAddress.UpdatedOn
-            };
             return new CustomerModel
             {
                 Id = customer.Id,
@@ -30,23 +18,11 @@ namespace SolarCoffee.Web.Serialization
                 UpdatedOn = customer.UpdatedOn,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
-                PrimaryAddress = address
+                PrimaryAddress = AddressMapper.SerializeCustomerAddress(customer.PrimaryAddress)
             };
         }
         public static Customer SerializeCustomer(CustomerModel customer)
         {
-            var address = new CustomerAddress
-            {
-                Id = customer.Id,
-                AddressLine1 = customer.PrimaryAddress.AddressLine1,
-                AddressLine2 = customer.PrimaryAddress.AddressLine2,
-                City = customer.PrimaryAddress.City,
-                State = customer.PrimaryAddress.State,
-                Country = customer.PrimaryAddress.Country,
-                PostalCode = customer.PrimaryAddress.PostalCode,
-                CreatedOn = customer.PrimaryAddress.CreatedOn,
-                UpdatedOn = customer.PrimaryAddress.UpdatedOn
-            };
             return new Customer
             {
                 Id = customer.Id,
@@ -54,7 +30,7 @@ namespace SolarCoffee.Web.Serialization
                 UpdatedOn = customer.UpdatedOn,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
-                PrimaryAddress = address
+                PrimaryAddress = AddressMapper.SerializeCustomerAddress(customer.PrimaryAddress)
             };
         }
     }

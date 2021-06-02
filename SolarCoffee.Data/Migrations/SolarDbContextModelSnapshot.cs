@@ -249,11 +249,11 @@ namespace SolarCoffee.Data.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("AdddressLine2")
+                    b.Property<string>("AddressLine1")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("AddressLine1")
+                    b.Property<string>("AddressLine2")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
