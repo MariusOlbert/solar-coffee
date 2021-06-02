@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace SolarCoffee.Data.Models
+namespace SolarCoffee.Web.ViewModels
 {
-    public class CustomerAddress
+    public class CustomerAddressModel
     {
         public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
