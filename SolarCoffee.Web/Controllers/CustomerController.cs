@@ -38,6 +38,7 @@ namespace SolarCoffee.Web.Controllers
             var customers = _customerService.GetAllCustomers();
             var customerModels = customers.Select(customer => new CustomerModel
             {
+                Id = customer.Id,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
                 PrimaryAddress = AddressMapper.SerializeCustomerAddress(customer.PrimaryAddress),
