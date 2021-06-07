@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SolarCoffee.Web.Controllers
 {
+    [ApiController]
     public class CustomerController : ControllerBase
     {
         private readonly ILogger<CustomerController> _logger;
