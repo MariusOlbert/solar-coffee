@@ -4,7 +4,13 @@ import router from "./router";
 import store from "./store";
 
 Vue.config.productionTip = false;
-
+Vue.filter('price', function (number: number) {
+  if (isNaN(number)) {
+    return '-'
+  } else {
+    return '$ ' + number.toFixed(2);
+  }
+});
 new Vue({
   router,
   store,
