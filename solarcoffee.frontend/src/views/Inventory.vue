@@ -46,6 +46,10 @@
     import NewProductModal from '@/components/modals/NewProductModal.vue';
     import ShipmentModal from '@/components/modals/ShipmentModal.vue';
     import { IShipment } from '@/types/Shipment';
+    import InventoryService from '@/services/InventoryService';
+
+
+    const inventoryService = new InventoryService();
 
     @Component({
         name: 'Inventory',
@@ -54,38 +58,7 @@
     export default class Inventory extends Vue {
         isProductVisible : boolean = false;
         isShipmentVisible : boolean = false;
-        inventory: IProductInventory [] = [
-            {
-                id: 1,
-                product: {
-                    id: 1,
-                    name: 'Some Product',
-                    description: 'Good stuff',
-                    price: 100,
-                    createdOn: new Date(),
-                    updatedOn: new Date(),
-                    isTaxable: true,
-                    isArchived: false
-                },
-                quantityOnHand: 100,
-                idealQuantity: 100
-            },
-            {
-                id: 2,
-                product: {
-                    id: 2,
-                    name: 'Some Product 2',
-                    description: 'Good stuff',
-                    price: 200,
-                    createdOn: new Date(),
-                    updatedOn: new Date(),
-                    isTaxable: false,
-                    isArchived: false
-                },
-                quantityOnHand: 40,
-                idealQuantity: 20
-            },
-        ];
+        inventory: IProductInventory [] = [];
         showProductModal() {
             this.isProductVisible = true;
             this.isShipmentVisible = false;
@@ -104,7 +77,17 @@
         saveNewShipment(shipment: IShipment) {
             console.log('saveNewShipment', shipment);
         }
+
+        async fetchData() {
+            this.inventory = await inventoryService.getInventory();
+        }
+
+        async created() {
+            await this.fetchData();
+        }
     }
 </script>
+
 <style scoped lang="scss">
+
 </style>
