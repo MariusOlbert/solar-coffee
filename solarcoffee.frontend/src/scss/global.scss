@@ -62,3 +62,16 @@ select {
     padding: 0.2rem 0;
     color: #555;
 }
+
+.green {
+    font-weight: bold;
+    color: $solar-green;
+}
+.red {
+    font-weight: bold;
+    color: $solar-red;
+}
+.yellow {
+    font-weight: bold;
+    color: $solar-yellow;
+}

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using SolarCoffee.Services.Product;
 using SolarCoffee.Web.Serialization;
+using SolarCoffee.Web.ViewModels;
 using System.Linq;
 
 namespace SolarCoffee.Web.Controllers
@@ -17,6 +18,22 @@ namespace SolarCoffee.Web.Controllers
             _logger = logger;
             _productService = productService;
         }
+
+        [HttpPost("/api/products")]
+        public ActionResult AddProduct([FromBody] ProductModel product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Adding new product");
+            var newProduct = ProductMapper.SerializeProductModel(product);
+            var newProductResponse = _productService.CreateProduct(newProduct);
+            return Ok(newProductResponse);
+        }
+
+
         [HttpGet("/api/products")]
         public ActionResult GetProducts()
         {

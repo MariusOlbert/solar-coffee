@@ -11,15 +11,15 @@
                 </li>
                 <li>
                     <label for="productName">Name</label>
-                    <input type="text" id="productName" v-model="newProduct.Name">
+                    <input type="text" id="productName" v-model="newProduct.name">
                 </li>
                 <li>
                     <label for="productDesc">Description</label>
-                    <input type="text" id="productDesc" v-model="newProduct.Description">
+                    <input type="text" id="productDesc" v-model="newProduct.description">
                 </li>
                 <li>
                     <label for="productPrice">Price (USD)</label>
-                    <input type="number" id="productPrice" v-model="newProduct.Price">
+                    <input type="number" id="productPrice" v-model="newProduct.price">
                 </li>
             </ul>
         </template>
