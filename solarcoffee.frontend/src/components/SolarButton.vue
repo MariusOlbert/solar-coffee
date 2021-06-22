@@ -3,7 +3,8 @@
         <button 
         @click="onClick" 
         :class="['solar-button',{'full-width': isFullWidth}]"
-        type="button">
+        type="button"
+        :disabled="disabled">
             <slot></slot>
         </button>
     </div>
@@ -21,7 +22,8 @@ export default class SolarButton extends Vue {
 
     @Prop({required: false, type: Boolean, default: false})
     isFullWidth?: boolean;
-
+    @Prop({required: false, type: Boolean, default: false})
+    disabled?: boolean;
     onClick() {
         this.$emit('button:click');
     }

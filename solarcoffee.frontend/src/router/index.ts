@@ -30,7 +30,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/invoice/new',
-    name: 'create-invoice',
+    name: 'createInvoice',
     component: CreateInvoice
   }
 ];

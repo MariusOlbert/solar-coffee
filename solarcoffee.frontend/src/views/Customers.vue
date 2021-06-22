@@ -25,10 +25,15 @@
                 <td>{{customer.primaryAddress.state}}</td>
                 <td>{{customer.createdOn | humanizeDate }}</td>
                 <td>
-                     <div class="lni lni-cross-circle product-archive" @click="deleteCustomer(customer.id)"></div>
+                     <div class="lni lni-cross-circle customer-delete" @click="deleteCustomer(customer.id)"></div>
                 </td>
             </tr>
         </table>
+        <new-customer-modal 
+            v-if="isCustomerModalVisible"
+            @save:customer="saveNewCustomer"
+            @close="closeModal"
+        />
     </div>
 </template>
 <script lang="ts">
@@ -36,13 +41,15 @@
     import SolarButton from '@/components/SolarButton.vue';
     import { ICustomer } from '@/types/Customer';
     import CustomerService from '@/services/CustomerService';
+    import NewCustomerModal from '@/components/modals/NewCustomerModal.vue';
+
 
     const customerService = new CustomerService();
 
 
     @Component({
         name: 'Customers',
-        components: {SolarButton}
+        components: {SolarButton, NewCustomerModal}
     })
     export default class Customers extends Vue {
         customers: ICustomer[] = [];
@@ -50,6 +57,10 @@
 
         showNewCustomerModal() {
             this.isCustomerModalVisible = true;
+        }
+
+        closeModal() {
+            this.isCustomerModalVisible = false;
         }
 
         async fetchData() {
@@ -63,6 +74,12 @@
 
         async deleteCustomer(customerId: number) {
             await customerService.deleteCustomer(customerId);
+            await this.fetchData();
+        }
+
+        async saveNewCustomer(newCustomer: ICustomer) {
+            await customerService.addCustomer(newCustomer);
+            this.isCustomerModalVisible = false;
             await this.fetchData();
         }
     }
