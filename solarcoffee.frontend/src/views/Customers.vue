@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 id="cutomersTitle">Manage Customers</h1>
+        <h1 id="customersTitle">Manage Customers</h1>
         <hr />
         <div class="customer-actions">
             <solar-button @button:click="showNewCustomerModal">

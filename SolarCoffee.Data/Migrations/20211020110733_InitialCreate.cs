@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace SolarCoffee.Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -244,7 +244,7 @@ namespace SolarCoffee.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    SnapshitTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    SnapshotTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     QuantityOnHand = table.Column<int>(type: "integer", nullable: false),
                     ProductId = table.Column<int>(type: "integer", nullable: true)
                 },

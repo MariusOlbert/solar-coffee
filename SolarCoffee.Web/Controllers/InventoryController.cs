@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using SolarCoffee.Data.Models;
 
 namespace SolarCoffee.Web.Controllers
 {
@@ -53,6 +55,36 @@ namespace SolarCoffee.Web.Controllers
             var inventory = _inventoryService.UpdateUnitsAvailable(id, adjustment);
 
             return Ok(inventory);
+        }
+
+        [HttpGet("/api/inventory/snapshot")]
+        public ActionResult GetSnapshotHistory() {
+            _logger.LogInformation("Getting snapshot history");
+            try{
+                var snapshotHistory = _inventoryService.GetSnapshotHistory();
+                var timelineMarkers = snapshotHistory.Select(t => t.SnapshotTime).Distinct().ToList();
+
+                var snapshots = snapshotHistory.GroupBy(hist => hist.Product, hist => hist.QuantityOnHand,
+                    (key, q) => new ProductInventorySnapshotModel
+                    {
+                        ProductId = key.Id,
+                        QuantityOnHand = q.ToList()
+                    })
+                    .OrderBy(hist => hist.ProductId)
+                    .ToList();
+                var viewModel = new ProductInventorySnapshotModel.SnapshotResponse
+                {
+                    TimeLine = timelineMarkers, 
+                    ProductInventorySnapshots = snapshots
+                };
+
+                return Ok(viewModel);
+            }
+            catch (Exception e){
+                _logger.LogError("Error getting snapshot history.");
+                _logger.LogError(e.StackTrace);
+                return BadRequest("Error retrieving history");
+            }
         }
     }
 }

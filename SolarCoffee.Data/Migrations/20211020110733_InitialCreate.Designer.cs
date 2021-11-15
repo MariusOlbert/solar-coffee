@@ -10,8 +10,8 @@ using SolarCoffee.Data;
 namespace SolarCoffee.Data.Migrations
 {
     [DbContext(typeof(SolarDbContext))]
-    [Migration("20210602195932_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20211020110733_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -363,7 +363,7 @@ namespace SolarCoffee.Data.Migrations
                     b.Property<int>("QuantityOnHand")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("SnapshitTime")
+                    b.Property<DateTime>("SnapshotTime")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
